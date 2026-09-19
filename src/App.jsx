@@ -1,18 +1,17 @@
-import { Routes, Route } from 'react-router-dom';
-import AppLayout from './routes/AppLayout';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import NotFoundPage from './pages/NotFoundPage';
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
 
 function App() {
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+    <div style={{ fontFamily: 'sans-serif', padding: '24px' }}>
+      <header style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+        <Header />
+      </header>
+
+      <main>
+        <Outlet />
+      </main>
+    </div>
   );
 }
 
