@@ -1,3 +1,5 @@
 @import "tailwindcss";
 
 @import "./styles/variables.css";
+@import "./styles/dashboard-tokens.css";
+@import "./styles/shared.css";

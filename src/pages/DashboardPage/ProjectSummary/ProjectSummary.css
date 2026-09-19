@@ -1,4 +1,5 @@
 @layer components {
+
 .dash-summary__table {
   width: 100%;
   border-collapse: collapse;
@@ -40,6 +41,10 @@
   background: rgba(0, 0, 0, 0.02);
 }
 
+:root[data-theme='dark'] .dash-summary__table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
 /* Mini progress ring */
 .dash-summary__ring {
   width: 34px;
@@ -67,20 +72,6 @@
   font-weight: 700;
   fill: var(--dash-text);
 }
-
-/* Status badges */
-.dash-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.dash-badge--completed { background: var(--dash-success-light); color: #2f7d46; }
-.dash-badge--in-progress { background: var(--dash-yellow-light); color: #a37a15; }
-.dash-badge--delayed { background: var(--dash-danger-light); color: #c0544e; }
-.dash-badge--on-going { background: var(--dash-coral-light); color: var(--dash-accent); }
 
 /* Scroll ngang trên màn nhỏ */
 .dash-summary {
