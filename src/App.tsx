@@ -3,8 +3,8 @@ import Header from './components/Header';
 
 function App() {
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '24px' }}>
-      <header style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+    <div className="p-6">
+      <header className="flex items-center gap-3 mb-5">
         <Header />
       </header>
 

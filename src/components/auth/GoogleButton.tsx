@@ -1,3 +1,10 @@
+import type { MouseEvent, ReactNode } from 'react';
+
+interface GoogleButtonProps {
+  children?: ReactNode;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+}
+
 function GoogleIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="auth-google__icon">
@@ -21,7 +28,7 @@ function GoogleIcon() {
   );
 }
 
-function GoogleButton({ children = 'Đăng nhập với Google', onClick }) {
+function GoogleButton({ children = 'Đăng nhập với Google', onClick }: GoogleButtonProps) {
   return (
     <button type="button" className="auth-google" onClick={onClick}>
       <GoogleIcon />

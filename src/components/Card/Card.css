@@ -1,0 +1,64 @@
+@layer components {
+.dash-card {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  box-shadow: var(--dash-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dash-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px 0;
+}
+
+.dash-card__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dash-text);
+}
+
+.dash-card__action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dash-card__body {
+  padding: 14px 18px 18px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-card__body--flush {
+  padding: 0;
+}
+
+/* Dropdown giả dùng chung cho các card */
+.dash-select {
+  appearance: none;
+  border: 1px solid var(--dash-border);
+  background: var(--dash-surface);
+  color: var(--dash-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 26px 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23808080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.dash-select:focus {
+  outline: none;
+  border-color: var(--dash-accent);
+}
+
+}

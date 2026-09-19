@@ -1,3 +1,17 @@
+import type { ChangeEvent, ReactNode } from 'react';
+
+interface FormFieldProps {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  error?: string;
+  autoComplete?: string;
+  children?: ReactNode;
+}
+
 function FormField({
   id,
   label,
@@ -8,7 +22,7 @@ function FormField({
   error,
   autoComplete,
   children,
-}) {
+}: FormFieldProps) {
   return (
     <div className="auth-field">
       <label className="auth-field__label" htmlFor={id}>

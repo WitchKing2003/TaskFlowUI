@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import FormField from '../components/auth/FormField';
@@ -12,9 +13,16 @@ const STRENGTH_STEPS = [
   { threshold: 0, label: 'Yếu', className: 'is-weak' },
   { threshold: 34, label: 'Trung bình', className: 'is-medium' },
   { threshold: 67, label: 'Mạnh', className: 'is-strong' },
-];
+] as const;
 
-function scorePassword(password) {
+interface RegisterForm {
+  name: string;
+  email: string;
+  password: string;
+  confirm: string;
+}
+
+function scorePassword(password: string): number {
   if (!password) return 0;
   let score = 0;
   if (password.length >= PASSWORD_MIN) score += 34;
@@ -24,7 +32,7 @@ function scorePassword(password) {
   return Math.min(100, score);
 }
 
-function StrengthMeter({ score }) {
+function StrengthMeter({ score }: { score: number }) {
   const step = STRENGTH_STEPS.reduce(
     (best, current) => (score >= current.threshold ? current : best),
     STRENGTH_STEPS[0],
@@ -61,26 +69,26 @@ function EyeOffIcon() {
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<RegisterForm>({
     name: '',
     email: '',
     password: '',
     confirm: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Partial<RegisterForm> & { form?: string }>({});
   const [accepted, setAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const strength = useMemo(() => scorePassword(form.password), [form.password]);
 
-  const updateField = (event) => {
+  const updateField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
     setErrors((current) => ({ ...current, [name]: undefined }));
   };
 
-  const validate = () => {
-    const nextErrors = {};
+  const validate = (): Partial<RegisterForm> => {
+    const nextErrors: Partial<RegisterForm> = {};
     if (form.name.trim().length < NAME_MIN) {
       nextErrors.name = 'Vui lòng nhập họ tên (ít nhất 2 ký tự).';
     }
@@ -98,9 +106,9 @@ function RegisterPage() {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nextErrors = validate();
+    const nextErrors: Partial<RegisterForm> & { form?: string } = validate();
     if (!accepted) {
       nextErrors.form = 'Vui lòng đồng ý với điều khoản sử dụng.';
     }

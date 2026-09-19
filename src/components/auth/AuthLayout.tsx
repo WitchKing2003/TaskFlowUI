@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 
 const TRACKING_PROJECTS = 95;
 
-function BrandPanel({ progress, avatars }) {
+interface BrandPanelProps {
+  progress: number;
+  avatars: string[];
+}
+
+function BrandPanel({ progress, avatars }: BrandPanelProps) {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -79,7 +84,17 @@ function BrandPanel({ progress, avatars }) {
   );
 }
 
-function AuthLayout({ progress = 72, avatars = ['S', 'D', 'K', 'H'], children }) {
+interface AuthLayoutProps {
+  progress?: number;
+  avatars?: string[];
+  children: React.ReactNode;
+}
+
+function AuthLayout({
+  progress = 72,
+  avatars = ['S', 'D', 'K', 'H'],
+  children,
+}: AuthLayoutProps) {
   return (
     <div className="auth-screen">
       <div className="auth-shell">

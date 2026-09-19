@@ -1,8 +1,9 @@
-/* =========================================================
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@layer components {
+ /* =========================================================
    Auth pages — Promage dark theme
    ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 .auth-screen {
   --auth-bg: #050505;
@@ -544,4 +545,6 @@
   .auth-main {
     padding: 32px 24px 40px;
   }
+}
+
 }

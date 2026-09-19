@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import FormField from '../components/auth/FormField';
@@ -6,6 +7,11 @@ import GoogleButton from '../components/auth/GoogleButton';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_MIN = 8;
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 function EyeIcon() {
   return (
@@ -28,19 +34,19 @@ function EyeOffIcon() {
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState({});
+  const [form, setForm] = useState<LoginForm>({ email: '', password: '' });
+  const [errors, setErrors] = useState<Partial<LoginForm> & { form?: string }>({});
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const updateField = (event) => {
+  const updateField = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
     setErrors((current) => ({ ...current, [name]: undefined }));
   };
 
-  const validate = () => {
-    const nextErrors = {};
+  const validate = (): Partial<LoginForm> => {
+    const nextErrors: Partial<LoginForm> = {};
     if (!form.email.trim()) {
       nextErrors.email = 'Vui lòng nhập email.';
     } else if (!EMAIL_PATTERN.test(form.email.trim())) {
@@ -54,7 +60,7 @@ function LoginPage() {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors = validate();
     setErrors(nextErrors);

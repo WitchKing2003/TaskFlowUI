@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import AuthLayout from '../components/auth/AuthLayout';
 import FormField from '../components/auth/FormField';
@@ -7,10 +8,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
-  const [error, setError] = useState(undefined);
-  const [sentTo, setSentTo] = useState(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [sentTo, setSentTo] = useState<string | undefined>(undefined);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!email.trim()) {
       setError('Vui lòng nhập email.');

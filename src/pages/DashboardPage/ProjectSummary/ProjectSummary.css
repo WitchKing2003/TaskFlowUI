@@ -1,0 +1,90 @@
+@layer components {
+.dash-summary__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.dash-summary__table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--dash-text-muted);
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.dash-summary__table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--dash-border-soft);
+  color: var(--dash-text-secondary);
+  white-space: nowrap;
+}
+
+.dash-summary__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dash-summary__table td:first-child {
+  font-weight: 600;
+  color: var(--dash-text);
+}
+
+.dash-summary__table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.dash-summary__table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Mini progress ring */
+.dash-summary__ring {
+  width: 34px;
+  height: 34px;
+  transform: rotate(-90deg);
+}
+
+.dash-summary__ring-track {
+  fill: none;
+  stroke: var(--dash-border);
+  stroke-width: 3;
+}
+
+.dash-summary__ring-value {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--transition-slow);
+}
+
+.dash-summary__ring-text {
+  transform: rotate(90deg);
+  transform-origin: 12px 12px;
+  font-size: 7.5px;
+  font-weight: 700;
+  fill: var(--dash-text);
+}
+
+/* Status badges */
+.dash-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dash-badge--completed { background: var(--dash-success-light); color: #2f7d46; }
+.dash-badge--in-progress { background: var(--dash-yellow-light); color: #a37a15; }
+.dash-badge--delayed { background: var(--dash-danger-light); color: #c0544e; }
+.dash-badge--on-going { background: var(--dash-coral-light); color: var(--dash-accent); }
+
+/* Scroll ngang trên màn nhỏ */
+.dash-summary {
+  overflow-x: auto;
+}
+
+}
