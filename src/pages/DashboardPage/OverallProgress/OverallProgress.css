@@ -1,0 +1,70 @@
+@layer components {
+.dash-gauge__wrap {
+  position: relative;
+  padding: 6px 0 2px;
+}
+
+.dash-gauge__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dash-gauge__track,
+.dash-gauge__value {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.dash-gauge__track {
+  stroke: var(--dash-border-soft);
+}
+
+.dash-gauge__value {
+  stroke: var(--dash-accent);
+  transition: stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dash-gauge__center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dash-gauge__percent {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--dash-text);
+  line-height: 1.1;
+}
+
+.dash-gauge__label {
+  font-size: 11px;
+  color: var(--dash-text-muted);
+}
+
+.dash-gauge__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.dash-gauge__stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.dash-gauge__stat-label {
+  font-size: 10.5px;
+  color: var(--dash-text-muted);
+}
+
+}

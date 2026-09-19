@@ -1,0 +1,50 @@
+@layer components {
+.dash-workload__chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 6px;
+  min-height: 150px;
+}
+
+.dash-workload__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.dash-workload__dots {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 3px;
+}
+
+.dash-workload__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--dash-text-muted);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--dash-text);
+}
+
+.dash-workload__dot.is-top {
+  background: var(--dash-text);
+  border-color: var(--dash-text);
+  color: var(--dash-surface);
+}
+
+.dash-workload__name {
+  font-size: 10.5px;
+  color: var(--dash-text-muted);
+}
+
+}

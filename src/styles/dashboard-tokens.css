@@ -1,0 +1,81 @@
+/* =========================================================
+   Design tokens chung cho phần app (dashboard, projects, tasks)
+   — sáng + tối. Import 1 lần từ index.css.
+   ========================================================= */
+
+@layer components {
+
+:root {
+  --dash-bg: #d8cfc9;
+  --dash-surface: #fdf9f6;
+  --dash-border: #e5ddd6;
+  --dash-border-soft: #efe8e2;
+  --dash-text: #26211f;
+  --dash-text-secondary: #5f5a56;
+  --dash-text-muted: #8d8783;
+  --dash-accent: #e5622c;
+  --dash-sidebar-bg: #0d0b0a;
+  --dash-sidebar-text: #f8f2ee;
+  --dash-sidebar-muted: #9a938e;
+  --dash-sidebar-active: #2c2320;
+  --dash-radius: 14px;
+  --dash-radius-lg: 18px;
+  --dash-shadow-sm: 0 1px 2px rgba(39, 33, 31, 0.05);
+  --dash-purple: #8b5cf6;
+  --dash-purple-light: #e9dcfb;
+  --dash-blue: #4d8fdd;
+  --dash-blue-light: #d8e7f8;
+  --dash-yellow-light: #f6e8c4;
+  --dash-coral-light: #f6ddd0;
+  --dash-success: #4f9b63;
+  --dash-success-light: #d9ecdd;
+  --dash-danger: #d86f69;
+  --dash-danger-light: #f3d5d3;
+  --dash-warning: #d9a92e;
+
+  /* Badge: nền + chữ đổi theo theme */
+  --badge-completed-bg: #d9ecdd;
+  --badge-completed-text: #2f7d46;
+  --badge-progress-bg: #f6e8c4;
+  --badge-progress-text: #a37a15;
+  --badge-delayed-bg: #f3d5d3;
+  --badge-delayed-text: #c0544e;
+  --badge-ongoing-bg: #f6ddd0;
+  --badge-ongoing-text: #d95f24;
+
+  /* Thanh tiến độ */
+  --progress-track: #e7ded7;
+  --progress-fill: var(--dash-accent);
+}
+
+:root[data-theme='dark'] {
+  --dash-bg: #0b0a09;
+  --dash-surface: #171412;
+  --dash-border: #2b2622;
+  --dash-border-soft: #221e1b;
+  --dash-text: #f4efe9;
+  --dash-text-secondary: #b3aca5;
+  --dash-text-muted: #7d766f;
+  --dash-sidebar-bg: #121009;
+  --dash-sidebar-active: #3a2d24;
+  --dash-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  --badge-completed-bg: #1d2b20;
+  --badge-completed-text: #6fbf83;
+  --badge-progress-bg: #2e2716;
+  --badge-progress-text: #e3b95e;
+  --badge-delayed-bg: #331d1c;
+  --badge-delayed-text: #f08c86;
+  --badge-ongoing-bg: #33241c;
+  --badge-ongoing-text: #f08c5e;
+
+  --progress-track: #2b2622;
+}
+
+/* Nền trang app theo theme (chỉ khi đang hiển thị màn app) */
+body:has(.dash-screen) {
+  background-color: var(--dash-bg);
+  color: var(--dash-text);
+}
+
+}

@@ -1,0 +1,48 @@
+@layer components {
+
+/* =========================================================
+   Badge trạng thái dùng chung (projects, tasks...)
+   ========================================================= */
+
+.dash-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dash-badge--completed { background: var(--badge-completed-bg); color: var(--badge-completed-text); }
+.dash-badge--in-progress { background: var(--badge-progress-bg); color: var(--badge-progress-text); }
+.dash-badge--delayed { background: var(--badge-delayed-bg); color: var(--badge-delayed-text); }
+.dash-badge--on-going { background: var(--badge-ongoing-bg); color: var(--badge-ongoing-text); }
+.dash-badge--approved { background: var(--badge-completed-bg); color: var(--badge-completed-text); }
+.dash-badge--in-review { background: var(--badge-progress-bg); color: var(--badge-progress-text); }
+.dash-badge--at-risk { background: var(--badge-delayed-bg); color: var(--badge-delayed-text); }
+
+/* =========================================================
+   Thanh tiến độ dùng chung
+   ========================================================= */
+
+.dash-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--progress-track);
+  overflow: hidden;
+  flex: 1;
+}
+
+.dash-progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--progress-fill);
+  transition: width var(--transition-slow);
+}
+
+/* Progress bar trong dark mode dùng fill cam sáng hơn một chút */
+:root[data-theme='dark'] .dash-progress__fill {
+  background: #ef7a42;
+}
+
+}

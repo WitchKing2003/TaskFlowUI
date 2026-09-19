@@ -1,0 +1,53 @@
+@layer components {
+
+.dash-section {
+  margin-bottom: 22px;
+}
+
+.dash-section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.dash-section__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dash-text);
+}
+
+/* =========================================================
+   Grid chính — template areas để các hàng luôn thẳng
+   summary   | progress
+   tasks     | workload
+   ========================================================= */
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'summary progress'
+    'tasks workload';
+  gap: 18px;
+  align-items: start;
+}
+
+.dash-grid__summary { grid-area: summary; }
+.dash-grid__progress { grid-area: progress; }
+.dash-grid__tasks { grid-area: tasks; }
+.dash-grid__workload { grid-area: workload; }
+
+@media (max-width: 1100px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'summary'
+      'progress'
+      'tasks'
+      'workload';
+  }
+}
+
+}

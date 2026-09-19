@@ -1,0 +1,306 @@
+:root {
+    /* =======================================================
+     Background
+     ======================================================= */
+
+    --color-background: #f2eae5;
+    --color-surface: #f3eae5;
+    --color-surface-light: #fbf8f5;
+    --color-surface-soft: #ebdfd8;
+
+
+    /* =======================================================
+     Border
+     ======================================================= */
+
+    --color-border: #dcd7d2;
+    --color-border-soft: #eae1dc;
+
+
+    /* =======================================================
+     Text
+     ======================================================= */
+
+    --color-text-primary: #27211f;
+    --color-text-secondary: #666761;
+    --color-text-muted: #83827e;
+    --color-text-light: #f8f2ee;
+
+
+    /* =======================================================
+     Sidebar
+     ======================================================= */
+
+    --color-sidebar: #060606;
+    --color-sidebar-hover: #1b1716;
+    --color-sidebar-active: #292322;
+    --color-sidebar-text: #f8f2ee;
+    --color-sidebar-muted: #83827e;
+
+
+    /* =======================================================
+     Primary
+     ======================================================= */
+
+    --color-primary: #d26837;
+    --color-primary-light: #f1c6b1;
+    --color-primary-hover: #b95629;
+
+
+    /* =======================================================
+     Purple
+     ======================================================= */
+
+    --color-purple: #b879d2;
+    --color-purple-light: #e4c8ed;
+
+
+    /* =======================================================
+     Coral
+     ======================================================= */
+
+    --color-coral: #de7d59;
+    --color-coral-light: #f1c7b8;
+
+
+    /* =======================================================
+     Blue
+     ======================================================= */
+
+    --color-blue: #6ea2dd;
+    --color-blue-light: #c9ddf3;
+
+
+    /* =======================================================
+     Yellow
+     ======================================================= */
+
+    --color-yellow: #e3b95e;
+    --color-yellow-light: #f2dfad;
+
+
+    /* =======================================================
+     Status
+     ======================================================= */
+
+    --color-success: #4f9b63;
+    --color-success-light: #d3e7d6;
+
+    --color-danger: #d86f69;
+    --color-danger-light: #f0cfcc;
+
+    --color-warning: #e3b95e;
+    --color-warning-light: #f2dfad;
+
+    --color-info: #6ea2dd;
+    --color-info-light: #c9ddf3;
+
+
+    /* =======================================================
+     White / Black
+     ======================================================= */
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+
+    /* =======================================================
+     Typography
+     ======================================================= */
+
+    --font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    --font-size-xs: 11px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 32px;
+
+
+    /* =======================================================
+     Font Weight
+     ======================================================= */
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+
+    /* =======================================================
+     Border Radius
+     ======================================================= */
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+
+    /* =======================================================
+     Spacing
+     ======================================================= */
+
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-10: 40px;
+    --spacing-12: 48px;
+    --spacing-16: 64px;
+
+
+    /* =======================================================
+     Shadows
+     ======================================================= */
+
+    --shadow-sm:
+        0 1px 2px rgba(39, 33, 31, 0.04);
+
+    --shadow-md:
+        0 4px 12px rgba(39, 33, 31, 0.06);
+
+    --shadow-lg:
+        0 10px 30px rgba(39, 33, 31, 0.08);
+
+
+    /* =======================================================
+     Transition
+     ======================================================= */
+
+    --transition-fast: 150ms ease;
+    --transition-normal: 200ms ease;
+    --transition-slow: 300ms ease;
+
+
+    /* =======================================================
+     Z-Index
+     ======================================================= */
+
+    --z-dropdown: 1000;
+    --z-sticky: 1100;
+    --z-fixed: 1200;
+    --z-modal: 1300;
+    --z-popover: 1400;
+    --z-tooltip: 1500;
+}
+
+
+@layer base {
+
+/* =========================================================
+   Global Reset
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+/* =========================================================
+   Selection
+   ========================================================= */
+
+::selection {
+    color: var(--color-text-light);
+    background-color: var(--color-primary);
+}
+
+
+/* =========================================================
+   Scrollbar
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+}
