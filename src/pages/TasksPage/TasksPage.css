@@ -91,6 +91,20 @@
   box-shadow: var(--dash-shadow-sm);
   padding: 14px;
   min-width: 0;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Cột đang giữ card kéo qua */
+.tasks-column.is-drag-over {
+  border: 1.5px dashed var(--dash-accent);
+  background: color-mix(in srgb, var(--dash-accent) 6%, var(--dash-surface));
+  box-shadow: 0 6px 18px rgba(229, 98, 44, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Khi đang kéo: các cột khác mờ nhẹ để nổi bật điểm đến */
+.tasks-board:has(.task-card.is-dragging) .tasks-column:not(.is-drag-over) {
+  opacity: 0.55;
 }
 
 .tasks-column__head {
@@ -125,22 +139,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.tasks-column__add {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px dashed var(--dash-border);
-  background: transparent;
-  color: var(--dash-text-muted);
-  font-size: 12px;
-  font-weight: 500;
-  transition: border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.tasks-column__add:hover {
-  border-color: var(--dash-accent);
-  color: var(--dash-accent);
 }
 
 /* =========================================================
@@ -190,7 +188,20 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), opacity var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Card đang được kéo */
+.task-card.is-dragging {
+  opacity: 0.4;
+  border-style: dashed;
+  border-color: var(--dash-accent);
+  transform: scale(0.98);
+  cursor: grabbing;
+}
+
+.task-card[draggable='true'] {
+  cursor: grab;
 }
 
 /* Card bấm được để mở chi tiết */

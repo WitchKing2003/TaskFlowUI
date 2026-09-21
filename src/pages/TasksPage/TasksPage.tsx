@@ -140,18 +140,6 @@ const TASK_FORM_FIELDS: FormModalField[] = [
   { name: 'title', label: 'Tên task', type: 'textarea', required: true, placeholder: 'Mô tả ngắn công việc...' },
   { name: 'description', label: 'Mô tả chi tiết', type: 'textarea', placeholder: 'Bối cảnh, yêu cầu, link tài liệu...' },
   {
-    name: 'column',
-    label: 'Trạng thái',
-    type: 'select',
-    required: true,
-    options: [
-      { value: 'todo', label: 'To do' },
-      { value: 'inprogress', label: 'In progress' },
-      { value: 'inreview', label: 'In review' },
-      { value: 'completed', label: 'Completed' },
-    ],
-  },
-  {
     name: 'tag',
     label: 'Loại',
     type: 'select',
@@ -183,12 +171,18 @@ function formatToday(): string {
 
 function TaskCard({
   task,
+  isDragging,
   onOpen,
   onDelete,
+  onDragStart,
+  onDragEnd,
 }: {
   task: TaskCardData;
+  isDragging: boolean;
   onOpen: (task: TaskCardData) => void;
   onDelete: (task: TaskCardData) => void;
+  onDragStart: (task: TaskCardData) => void;
+  onDragEnd: () => void;
 }) {
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -199,12 +193,19 @@ function TaskCard({
 
   return (
     <article
-      className="task-card is-clickable"
+      className={`task-card is-clickable${isDragging ? ' is-dragging' : ''}`}
       role="button"
       tabIndex={0}
       aria-label={`Xem chi tiết: ${task.title}`}
       onClick={() => onOpen(task)}
       onKeyDown={handleKeyDown}
+      draggable
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', String(task.id));
+        onDragStart(task);
+      }}
+      onDragEnd={onDragEnd}
     >
       <div className="task-card__top">
         <span className={`task-card__tag ${TAG_CLASS[task.tag]}`}>{task.tag}</span>
@@ -263,10 +264,13 @@ function TasksPage() {
 
   // Modal state
   const [formOpen, setFormOpen] = useState(false);
-  const [formColumn, setFormColumn] = useState<TaskColumn>('todo');
   const [deleting, setDeleting] = useState<TaskCardData | null>(null);
   const [detailTaskId, setDetailTaskId] = useState<number | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  // Drag & drop state
+  const [draggingId, setDraggingId] = useState<number | null>(null);
+  const [dragOverColumn, setDragOverColumn] = useState<TaskColumn | null>(null);
 
   const visible = useMemo(
     () =>
@@ -282,10 +286,7 @@ function TasksPage() {
     [tasks, detailTaskId],
   );
 
-  const openCreate = (column: TaskColumn = 'todo') => {
-    setFormColumn(column);
-    setFormOpen(true);
-  };
+  const openCreate = () => setFormOpen(true);
 
   const handleCreate = (values: FormModalValues) => {
     const id = Date.now();
@@ -305,11 +306,12 @@ function TasksPage() {
         assigneeName,
         assigneeRole: 'Team member',
         assigneeColor: ASSIGNEE_COLORS[id % ASSIGNEE_COLORS.length],
-        column: values.column as TaskColumn,
+        // Task mới luôn bắt đầu ở cột To do — đổi trạng thái bằng cách kéo thả
+        column: 'todo',
       },
       ...current,
     ]);
-    setSuccess(`Đã tạo task mới trong cột “${COLUMNS.find((c) => c.key === values.column)?.label}”.`);
+    setSuccess('Đã tạo task mới trong cột “To do”.');
     setFormOpen(false);
   };
 
@@ -363,8 +365,37 @@ function TasksPage() {
       <div className="tasks-board">
         {COLUMNS.map((column) => {
           const items = visible.filter((task) => task.column === column.key);
+          const isDragOver = dragOverColumn === column.key && draggingId != null;
           return (
-            <section key={column.key} className="tasks-column">
+            <section
+              key={column.key}
+              className={`tasks-column${isDragOver ? ' is-drag-over' : ''}`}
+              onDragOver={(event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'move';
+                if (dragOverColumn !== column.key) setDragOverColumn(column.key);
+              }}
+              onDragLeave={(event) => {
+                // Chỉ bỏ highlight khi rời hẳn cột (không phải hover vào con)
+                if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                  setDragOverColumn(null);
+                }
+              }}
+              onDrop={(event) => {
+                event.preventDefault();
+                const id = Number(event.dataTransfer.getData('text/plain'));
+                setDragOverColumn(null);
+                if (Number.isNaN(id)) return;
+                const task = tasks.find((item) => item.id === id);
+                if (!task || task.column === column.key) return;
+                setTasks((current) =>
+                  current.map((item) =>
+                    item.id === id ? { ...item, column: column.key } : item,
+                  ),
+                );
+                setSuccess(`Đã chuyển “${task.title.slice(0, 40)}${task.title.length > 40 ? '…' : ''}” sang ${column.label}.`);
+              }}
+            >
               <header className="tasks-column__head">
                 <span className="tasks-column__title">
                   <span className="tasks-column__dot" style={{ background: column.dot }} />
@@ -378,18 +409,16 @@ function TasksPage() {
                   <TaskCard
                     key={task.id}
                     task={task}
+                    isDragging={draggingId === task.id}
                     onOpen={(opened) => setDetailTaskId(opened.id)}
                     onDelete={setDeleting}
+                    onDragStart={(dragged) => setDraggingId(dragged.id)}
+                    onDragEnd={() => {
+                      setDraggingId(null);
+                      setDragOverColumn(null);
+                    }}
                   />
                 ))}
-
-                <button
-                  type="button"
-                  className="tasks-column__add"
-                  onClick={() => openCreate(column.key)}
-                >
-                  + Add task
-                </button>
               </div>
             </section>
           );
@@ -410,7 +439,6 @@ function TasksPage() {
         mode="create"
         title="Tạo task mới"
         fields={TASK_FORM_FIELDS}
-        initialValues={{ column: formColumn }}
         onSubmit={handleCreate}
         submitLabel="Tạo task"
       />
