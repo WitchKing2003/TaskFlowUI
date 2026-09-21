@@ -51,6 +51,27 @@ export function hasPermission(role: Role, permission: Permission): boolean {
   return ROLE_PERMISSIONS[role].includes(permission);
 }
 
+/** Quyền mặc định của một role (bản copy để tránh mutate const) */
+export function permissionsForRole(role: Role): Permission[] {
+  return [...ROLE_PERMISSIONS[role]];
+}
+
+/**
+ * Quyền thực tế của user: nếu có `permissions` riêng (custom) thì dùng nó,
+ * không thì rơi về quyền mặc định của role.
+ */
+export function effectivePermissions(user: Pick<AppUser, 'role' | 'permissions'>): Permission[] {
+  return user.permissions ?? permissionsForRole(user.role);
+}
+
+/** User có bộ quyền riêng (khác mặc định của role) hay không */
+export function isCustomPermissions(user: Pick<AppUser, 'role' | 'permissions'>): boolean {
+  if (!user.permissions) return false;
+  const defaults = ROLE_PERMISSIONS[user.role];
+  if (user.permissions.length !== defaults.length) return true;
+  return user.permissions.some((permission) => !defaults.includes(permission));
+}
+
 export const ROLE_BADGE_CLASS: Record<Role, string> = {
   manager: 'is-manager',
   leader: 'is-leader',
@@ -63,6 +84,8 @@ export interface AppUser {
   name: string;
   email: string;
   role: Role;
+  /** Bộ quyền riêng — undefined = dùng mặc định của role */
+  permissions?: Permission[];
   projects: string[];
   joinedLabel: string;
   avatarColor: 'orange' | 'purple' | 'yellow' | 'green';

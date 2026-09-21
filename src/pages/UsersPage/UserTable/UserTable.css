@@ -175,6 +175,56 @@
   white-space: nowrap;
 }
 
+/* -------------------- Edit + Remove buttons -------------------- */
+
+.user-table__role {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.user-table__custom-chip {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px dashed var(--dash-accent);
+  color: var(--dash-accent);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.user-table__edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--dash-border);
+  color: var(--dash-text-secondary);
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.user-table__edit:hover {
+  background: var(--dash-bg);
+  border-color: var(--dash-text-muted);
+  color: var(--dash-text);
+}
+
+.user-table__edit svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* -------------------- Remove button -------------------- */
 
 .user-table__remove {

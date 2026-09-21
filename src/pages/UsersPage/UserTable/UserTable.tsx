@@ -1,4 +1,4 @@
-import { ROLE_BADGE_CLASS, ROLES, hasPermission } from '../usersData';
+import { ROLE_BADGE_CLASS, ROLES, hasPermission, isCustomPermissions } from '../usersData';
 import type { AppUser, Role } from '../usersData';
 import './UserTable.css';
 
@@ -10,6 +10,8 @@ interface UserTableProps {
   /** Gỡ 1 chip dự án khỏi user */
   onRemoveProject: (userId: number, project: string) => void;
   onAddUser: () => void;
+  /** Mở modal sửa role + quyền */
+  onEditUser: (user: AppUser) => void;
 }
 
 function RoleBadge({ role }: { role: Role }) {
@@ -23,9 +25,11 @@ function UserTable({
   onRemoveUser,
   onRemoveProject,
   onAddUser,
+  onEditUser,
 }: UserTableProps) {
   const canRemove = hasPermission(currentUserRole, 'remove_user_from_project');
   const canRemoveProject = hasPermission(currentUserRole, 'remove_user_from_project');
+  const canEdit = hasPermission(currentUserRole, 'manage_users');
 
   return (
     <section className="user-table">
@@ -70,7 +74,17 @@ function UserTable({
                   </div>
                 </td>
                 <td>
-                  <RoleBadge role={user.role} />
+                  <div className="user-table__role">
+                    <RoleBadge role={user.role} />
+                    {isCustomPermissions(user) ? (
+                      <span
+                        className="user-table__custom-chip"
+                        title="Thành viên này có bộ quyền riêng không theo mặc định của vai trò"
+                      >
+                        Tùy chỉnh
+                      </span>
+                    ) : null}
+                  </div>
                 </td>
                 <td>
                   <div className="user-table__projects">
@@ -97,6 +111,19 @@ function UserTable({
                 </td>
                 <td className="user-table__joined">{user.joinedLabel}</td>
                 <td className="user-table__actions">
+                  {canEdit ? (
+                    <button
+                      type="button"
+                      className="user-table__edit"
+                      title={`Sửa vai trò & quyền của ${user.name}`}
+                      onClick={() => onEditUser(user)}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                      </svg>
+                      Sửa
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     className="user-table__remove"

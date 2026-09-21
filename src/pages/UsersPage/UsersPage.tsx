@@ -6,8 +6,15 @@ import SuccessDialog from '../../components/Modal/SuccessDialog';
 import RoleSummary from './RoleSummary/RoleSummary';
 import PermissionsMatrix from './PermissionsMatrix/PermissionsMatrix';
 import UserTable from './UserTable/UserTable';
-import { AVATAR_COLORS, INITIAL_USERS, ROLES, hasPermission } from './usersData';
-import type { AppUser, Role } from './usersData';
+import EditMemberModal from './EditMemberModal/EditMemberModal';
+import {
+  AVATAR_COLORS,
+  INITIAL_USERS,
+  ROLES,
+  hasPermission,
+  permissionsForRole,
+} from './usersData';
+import type { AppUser, Permission, Role } from './usersData';
 import './UsersPage.css';
 
 // Người "đăng nhập" hiện tại — đổi 'viewer'/'developer'/'leader' để thấy UI gate quyền
@@ -30,6 +37,7 @@ function UsersPage() {
   const [users, setUsers] = useState<AppUser[]>(INITIAL_USERS);
   const [formOpen, setFormOpen] = useState(false);
   const [removing, setRemoving] = useState<AppUser | null>(null);
+  const [editing, setEditing] = useState<AppUser | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   const canManage = useMemo(
@@ -51,6 +59,7 @@ function UsersPage() {
         name: values.name.trim(),
         email: values.email.trim(),
         role: values.role as Role,
+        permissions: permissionsForRole(values.role as Role),
         projects,
         joinedLabel: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         avatarColor: AVATAR_COLORS[id % AVATAR_COLORS.length],
@@ -77,6 +86,21 @@ function UsersPage() {
     setSuccess(`Đã gỡ khỏi dự án “${project}”.`);
   };
 
+  const handleSaveMember = (userId: number, role: Role, permissions?: Permission[]) => {
+    setUsers((current) =>
+      current.map((user) =>
+        user.id === userId ? { ...user, role, permissions } : user,
+      ),
+    );
+    const target = users.find((user) => user.id === userId);
+    if (!target) return;
+    const roleLabel = ROLES.find((item) => item.key === role)?.label ?? role;
+    setSuccess(
+      `Đã cập nhật ${target.name}: vai trò ${roleLabel}` +
+        (permissions ? ' với bộ quyền tùy chỉnh.' : ' (quyền mặc định của vai trò).'),
+    );
+  };
+
   return (
     <div className="users-page">
       <RoleSummary users={users} />
@@ -89,6 +113,15 @@ function UsersPage() {
         onRemoveUser={setRemoving}
         onRemoveProject={handleRemoveProject}
         onAddUser={() => setFormOpen(true)}
+        onEditUser={setEditing}
+      />
+
+      <EditMemberModal
+        key={editing?.id ?? 'none'}
+        open={Boolean(editing)}
+        onClose={() => setEditing(null)}
+        member={editing}
+        onSave={handleSaveMember}
       />
 
       <FormModal
