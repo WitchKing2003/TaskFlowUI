@@ -1,0 +1,37 @@
+.time-log-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px 26px 40px;
+}
+
+.time-log-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.time-log-page__add {
+  padding: 8px 16px;
+  border: 1px solid var(--dash-accent);
+  border-radius: 999px;
+  background: var(--dash-accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.time-log-page__add:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1100px) {
+  .time-log-page__grid {
+    grid-template-columns: 1fr;
+  }
+}
