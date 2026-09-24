@@ -1,0 +1,52 @@
+.time-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.time-summary__card {
+  padding: 18px 20px;
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  background: var(--dash-surface);
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.time-summary__card.is-accent {
+  background: linear-gradient(135deg, var(--dash-accent), #f0854f);
+  border-color: transparent;
+}
+
+.time-summary__card.is-accent .time-summary__label,
+.time-summary__card.is-accent .time-summary__value,
+.time-summary__card.is-accent .time-summary__sub {
+  color: #ffffff;
+}
+
+.time-summary__label {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dash-text-muted);
+}
+
+.time-summary__value {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--dash-text);
+}
+
+.time-summary__sub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dash-text-secondary);
+}
+
+@media (max-width: 1100px) {
+  .time-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,19 @@
+.resources-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px 26px 40px;
+}
+
+.resources-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .resources-page__grid {
+    grid-template-columns: 1fr;
+  }
+}
