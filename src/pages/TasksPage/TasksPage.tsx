@@ -184,6 +184,9 @@ function TaskCard({
   onDragStart: (task: TaskCardData) => void;
   onDragEnd: () => void;
 }) {
+  // Task hoàn thành = chỉ đọc: không kéo thả, không xóa
+  const readOnly = task.column === 'completed';
+
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -193,13 +196,13 @@ function TaskCard({
 
   return (
     <article
-      className={`task-card is-clickable${isDragging ? ' is-dragging' : ''}`}
+      className={`task-card is-clickable${isDragging ? ' is-dragging' : ''}${readOnly ? ' is-readonly' : ''}`}
       role="button"
       tabIndex={0}
       aria-label={`Xem chi tiết: ${task.title}`}
       onClick={() => onOpen(task)}
       onKeyDown={handleKeyDown}
-      draggable
+      draggable={!readOnly}
       onDragStart={(event) => {
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setData('text/plain', String(task.id));
@@ -209,19 +212,28 @@ function TaskCard({
     >
       <div className="task-card__top">
         <span className={`task-card__tag ${TAG_CLASS[task.tag]}`}>{task.tag}</span>
-        <button
-          type="button"
-          className="task-card__delete"
-          onClick={(event) => {
-            event.stopPropagation();
-            onDelete(task);
-          }}
-          aria-label="Xóa task"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
-        </button>
+        {readOnly ? (
+          <span className="task-card__lock" title="Task đã hoàn thành — chỉ đọc">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="11" width="14" height="9" rx="2" />
+              <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+            </svg>
+          </span>
+        ) : (
+          <button
+            type="button"
+            className="task-card__delete"
+            onClick={(event) => {
+              event.stopPropagation();
+              onDelete(task);
+            }}
+            aria-label="Xóa task"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+        )}
       </div>
 
       <h4 className="task-card__title">{task.title}</h4>
@@ -387,7 +399,8 @@ function TasksPage() {
                 setDragOverColumn(null);
                 if (Number.isNaN(id)) return;
                 const task = tasks.find((item) => item.id === id);
-                if (!task || task.column === column.key) return;
+                // Task hoàn thành là chỉ đọc — không cho di chuyển nữa
+                if (!task || task.column === 'completed' || task.column === column.key) return;
                 setTasks((current) =>
                   current.map((item) =>
                     item.id === id ? { ...item, column: column.key } : item,

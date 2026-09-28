@@ -1,5 +1,17 @@
 @layer components {
+/* Card bằng chiều cao hàng — chart lấp đầy, dots bám đáy */
+.dash-grid__workload .dash-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-workload {
+  flex: 1;
+  display: flex;
+}
+
 .dash-workload__chart {
+  flex: 1;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;

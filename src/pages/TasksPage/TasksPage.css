@@ -20,7 +20,7 @@
 }
 
 .tasks-toolbar__tab {
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1px solid var(--dash-border);
   background: var(--dash-surface);
@@ -178,6 +178,42 @@
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
+}
+
+/* Khóa nhỏ thay cho nút xóa khi task đã hoàn thành */
+.task-card__lock {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  color: var(--dash-success);
+}
+
+.task-card__lock svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Task hoàn thành — trạng thái chỉ đọc */
+.task-card.is-readonly {
+  cursor: default;
+  border-style: dashed;
+  background: transparent;
+}
+
+.task-card.is-readonly:hover {
+  border-color: var(--dash-border);
+  box-shadow: none;
+}
+
+:root[data-theme='dark'] .task-card.is-readonly {
+  background: transparent;
 }
 
 .task-card {

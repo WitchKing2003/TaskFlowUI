@@ -57,8 +57,12 @@ const STATS: StatItem[] = [
 function OverviewStats() {
   return (
     <div className="dash-stats">
-      {STATS.map((stat) => (
-        <article key={stat.id} className="dash-stat">
+      {STATS.map((stat, index) => (
+        <article
+          key={stat.id}
+          className="dash-stat stat-rise"
+          style={{ '--stat-i': index } as React.CSSProperties}
+        >
           <span className={`dash-stat__icon dash-stat__icon--${stat.accent}`}>
             {stat.icon}
           </span>
@@ -67,6 +71,9 @@ function OverviewStats() {
             {stat.value} <small>{stat.sub}</small>
           </p>
           <p className={`dash-stat__trend ${stat.trendUp ? 'is-up' : 'is-down'}`}>
+            <span className={`stat-trend-arrow${stat.trendUp ? '' : ' is-down'}`} aria-hidden="true">
+              {stat.trendUp ? '▲' : '▼'}
+            </span>
             {stat.trend}
           </p>
         </article>

@@ -14,13 +14,17 @@ function RoleSummary({ users }: { users: AppUser[] }) {
 
   return (
     <div className="role-summary">
-      <div className="role-summary__total">
+      <div className="role-summary__total stat-rise" style={{ '--stat-i': 0 } as React.CSSProperties}>
         <span className="role-summary__total-number">{users.length}</span>
         <span className="role-summary__total-label">Tổng thành viên</span>
       </div>
 
-      {ROLES.map((role) => (
-        <article key={role.key} className={`role-summary__card ${ROLE_CLASS[role.key]}`}>
+      {ROLES.map((role, index) => (
+        <article
+          key={role.key}
+          className={`role-summary__card stat-rise ${ROLE_CLASS[role.key]}`}
+          style={{ '--stat-i': index + 1 } as React.CSSProperties}
+        >
           <span className="role-summary__card-count">{counts[role.key]}</span>
           <span className="role-summary__card-label">{role.label}</span>
           <span className="role-summary__card-desc">{role.description}</span>

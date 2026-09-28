@@ -16,8 +16,12 @@ function TimeSummary() {
 
   return (
     <div className="time-summary">
-      {stats.map((stat) => (
-        <article key={stat.label} className={`time-summary__card${stat.accent ? ' is-accent' : ''}`}>
+      {stats.map((stat, index) => (
+        <article
+          key={stat.label}
+          className={`time-summary__card stat-rise${stat.accent ? ' is-accent' : ''}`}
+          style={{ '--stat-i': index } as React.CSSProperties}
+        >
           <p className="time-summary__label">{stat.label}</p>
           <p className="time-summary__value">{stat.value}</p>
           <p className="time-summary__sub">{stat.sub}</p>

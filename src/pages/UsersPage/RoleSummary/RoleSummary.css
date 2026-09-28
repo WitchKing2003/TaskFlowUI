@@ -3,19 +3,27 @@
 .role-summary {
   display: grid;
   grid-template-columns: 1.2fr repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px;
+  align-items: stretch;
   margin-bottom: 20px;
 }
 
-@media (max-width: 1100px) {
+/* Giữ một hàng 5 thẻ xuống đủ rộng; thu hẹp dần 3 → 2 → 1 */
+@media (max-width: 1080px) {
+  .role-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
   .role-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 460px) {
   .role-summary {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -24,8 +32,9 @@
   flex-direction: column;
   justify-content: center;
   gap: 4px;
+  min-width: 0;
   padding: 16px 18px;
-  border-radius: var(--dash-radius-lg);
+  border-radius: var(--dash-radius);
   background: var(--dash-sidebar-bg);
   color: var(--dash-sidebar-text);
   box-shadow: var(--dash-shadow-sm);
@@ -46,9 +55,10 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding: 14px 16px;
+  min-width: 0;
+  padding: 16px 18px;
   border: 1px solid var(--dash-border);
-  border-radius: var(--dash-radius-lg);
+  border-radius: var(--dash-radius);
   background: var(--dash-surface);
   box-shadow: var(--dash-shadow-sm);
   border-top: 3px solid transparent;

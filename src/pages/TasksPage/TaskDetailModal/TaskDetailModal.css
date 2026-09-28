@@ -4,15 +4,113 @@
    Task detail modal — grid 2 cột: trái info + comment, phải meta
    ========================================================= */
 
-.modal--task-detail .task-detail__grid,
+.modal.task-detail {
+  padding: 0;
+}
+
+/* -------------------- Header bar + nút Exit -------------------- */
+
+.task-detail__header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px 12px 20px;
+  background: var(--dash-surface);
+  border-bottom: 1px solid var(--dash-border-soft);
+}
+
+.task-detail__header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.task-detail__header-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dash-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-detail__header-id {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--dash-bg);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dash-text-muted);
+}
+
+.task-detail__header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Badge "chỉ đọc" khi task đã hoàn thành */
+.task-detail__ro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--dash-success);
+  background: var(--badge-completed-bg);
+  color: var(--badge-completed-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.task-detail__ro-badge svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Nút Exit nhỏ gọn nằm trên header bar */
+.modal.task-detail .modal__close.task-detail__close {
+  position: static;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border: 1px solid var(--dash-border);
+  border-radius: 9px;
+  background: var(--dash-bg);
+}
+
+.modal.task-detail .modal__close.task-detail__close:hover {
+  background: var(--badge-delayed-bg);
+  color: var(--badge-delayed-text);
+  border-color: var(--badge-delayed-text);
+}
+
+/* -------------------- Body -------------------- */
+
+.modal.task-detail .task-detail__grid,
 .task-detail__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 240px;
   gap: 22px;
   align-items: start;
+  padding: 18px 20px 20px;
 }
 
 @media (max-width: 640px) {
+  .modal.task-detail .task-detail__grid,
   .task-detail__grid {
     grid-template-columns: 1fr;
   }
@@ -135,9 +233,18 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-height: 230px;
+  gap: 14px;
+  max-height: 260px;
   overflow-y: auto;
+}
+
+/* Avatar trơn: chỉ hiển thị 1 chữ cái đầu */
+.task-detail__comment-avatar {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-top: 1px;
+  font-size: 12px;
 }
 
 .task-detail__comment {
@@ -146,20 +253,37 @@
   gap: 10px;
 }
 
-.task-detail__comment .task-card__assignee {
-  flex-shrink: 0;
-  font-size: 11px;
-  width: 28px;
-  height: 28px;
+.task-detail__comment-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  flex: 1;
 }
 
-.task-detail__comment-body {
+/* Tên tác giả + thời gian nằm phía trên nội dung bình luận */
+.task-detail__comment-meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
   min-width: 0;
+}
+
+.task-detail__comment-author {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dash-text);
+}
+
+.task-detail__comment-time {
+  font-size: 10.5px;
+  color: var(--dash-text-muted);
 }
 
 .task-detail__comment-text {
   margin: 0;
-  padding: 8px 12px;
+  padding: 9px 12px;
   border-radius: 4px 12px 12px 12px;
   background: var(--dash-bg);
   border: 1px solid var(--dash-border-soft);
@@ -168,13 +292,6 @@
   color: var(--dash-text);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-}
-
-.task-detail__comment-time {
-  display: block;
-  margin-top: 4px;
-  font-size: 10.5px;
-  color: var(--dash-text-muted);
 }
 
 .task-detail__comment-empty {
@@ -187,7 +304,7 @@
   text-align: center;
 }
 
-/* Composer */
+/* -------------------- Composer -------------------- */
 .task-detail__composer {
   display: flex;
   align-items: flex-end;
@@ -196,6 +313,7 @@
 
 .task-detail__composer-input {
   flex: 1;
+  min-width: 0;
   min-height: 44px;
   max-height: 120px;
   padding: 10px 12px;
@@ -220,6 +338,7 @@
 }
 
 .task-detail__composer-send {
+  align-self: stretch;
   padding: 10px 16px;
   border-radius: 10px;
   background: var(--dash-accent);
@@ -236,6 +355,32 @@
 .task-detail__composer-send:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+/* Ghi chú "chỉ đọc" thay cho ô bình luận */
+.task-detail__ro-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed var(--dash-border);
+  border-radius: 10px;
+  background: var(--dash-bg);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--dash-text-muted);
+}
+
+.task-detail__ro-note svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* -------------------- Cột phải -------------------- */

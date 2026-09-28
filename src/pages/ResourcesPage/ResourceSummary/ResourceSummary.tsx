@@ -16,8 +16,12 @@ function ResourceSummary() {
 
   return (
     <div className="res-summary">
-      {stats.map((stat) => (
-        <article key={stat.label} className={`res-summary__card${stat.accent ? ` is-${stat.accent}` : ''}`}>
+      {stats.map((stat, index) => (
+        <article
+          key={stat.label}
+          className={`res-summary__card stat-rise${stat.accent ? ` is-${stat.accent}` : ''}`}
+          style={{ '--stat-i': index } as React.CSSProperties}
+        >
           <p className="res-summary__label">{stat.label}</p>
           <p className="res-summary__value">{stat.value}</p>
           <p className="res-summary__sub">{stat.sub}</p>
