@@ -20,7 +20,7 @@
 }
 
 .projects-toolbar__tab {
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1px solid var(--dash-border);
   background: var(--dash-surface);
@@ -88,7 +88,7 @@
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 16px;
 }
 

@@ -23,7 +23,7 @@ function WeeklyChart() {
                   {day.hours > 0 ? (
                     <div
                       className={`weekly-chart__bar${isToday ? ' is-today' : ''}`}
-                      style={{ height: `${height}%` }}
+                      style={{ height: `${height}%`, animationDelay: `${index * 70}ms` }}
                       title={`${day.day}: ${formatHours(day.hours)}`}
                     />
                   ) : null}

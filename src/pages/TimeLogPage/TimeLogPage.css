@@ -9,7 +9,19 @@
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: 20px;
-  align-items: start;
+  /* Card cùng hàng luôn bằng nhau về chiều cao */
+  align-items: stretch;
+}
+
+/* Card biểu đồ luôn lấp đầy chiều cao, canh giữa nội dung */
+.time-log-page__chart .dash-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.weekly-chart {
+  width: 100%;
 }
 
 .time-log-page__add {

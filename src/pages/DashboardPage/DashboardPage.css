@@ -31,7 +31,8 @@
     'summary progress'
     'tasks workload';
   gap: 18px;
-  align-items: start;
+  /* Card cùng hàng luôn bằng nhau về chiều cao */
+  align-items: stretch;
 }
 
 .dash-grid__summary { grid-area: summary; }

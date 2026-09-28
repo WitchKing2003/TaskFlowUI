@@ -25,12 +25,15 @@ function TaskDetailModal({ open, onClose, task, comments, onAddComment }: TaskDe
 
   if (!task) return null;
 
+  /** Task hoàn thành = chế độ chỉ đọc: không chỉnh sửa, không bình luận */
+  const readOnly = task.column === 'completed';
   const taskComments = comments[task.id] ?? [];
   const donePercent = task.checklistTotal > 0
     ? Math.round((task.checklistDone / task.checklistTotal) * 100)
     : 0;
 
   const sendComment = () => {
+    if (readOnly) return;
     const text = draft.trim();
     if (!text) return;
     onAddComment(task.id, text);
@@ -51,7 +54,39 @@ function TaskDetailModal({ open, onClose, task, comments, onAddComment }: TaskDe
   };
 
   return (
-    <Modal open={open} onClose={onClose} maxWidth={780} className="task-detail">
+    <Modal open={open} onClose={onClose} maxWidth={780} hideClose className="task-detail">
+      {/* ================= Header bar: nhãn + nút Exit ================= */}
+      <header className="task-detail__header">
+        <div className="task-detail__header-left">
+          <span className="task-detail__header-eyebrow">Chi tiết task</span>
+          <span className="task-detail__header-id">#{task.id}</span>
+        </div>
+
+        <div className="task-detail__header-right">
+          {readOnly ? (
+            <span className="task-detail__ro-badge">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="9" rx="2" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+              </svg>
+              Chỉ đọc
+            </span>
+          ) : null}
+
+          <button
+            type="button"
+            className="modal__close task-detail__close"
+            onClick={onClose}
+            aria-label="Đóng"
+            title="Đóng (Exit)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
       <div className="task-detail__grid">
         {/* ================= Cột trái: thông tin task ================= */}
         <section className="task-detail__main">
@@ -100,43 +135,58 @@ function TaskDetailModal({ open, onClose, task, comments, onAddComment }: TaskDe
             <ul className="task-detail__comment-list">
               {taskComments.length === 0 ? (
                 <li className="task-detail__comment-empty">
-                  Chưa có bình luận nào — hãy bắt đầu cuộc trò chuyện.
+                  {readOnly
+                    ? 'Task đã hoàn thành — không thể thêm bình luận mới.'
+                    : 'Chưa có bình luận nào — hãy bắt đầu cuộc trò chuyện.'}
                 </li>
               ) : (
                 taskComments.map((comment) => (
                   <li key={comment.id} className="task-detail__comment">
                     <span
-                      className={`task-card__assignee task-card__assignee--${comment.avatarColor}`}
+                      className={`task-card__assignee task-card__assignee--${comment.avatarColor} task-detail__comment-avatar`}
                       aria-hidden="true"
                     >
-                      {comment.author}
+                      {comment.author.trim().charAt(0).toUpperCase()}
                     </span>
                     <div className="task-detail__comment-body">
+                      <div className="task-detail__comment-meta">
+                        <span className="task-detail__comment-author">{comment.author}</span>
+                        <span className="task-detail__comment-time">{comment.createdAt}</span>
+                      </div>
                       <p className="task-detail__comment-text">{comment.text}</p>
-                      <span className="task-detail__comment-time">{comment.createdAt}</span>
                     </div>
                   </li>
                 ))
               )}
             </ul>
 
-            <form className="task-detail__composer" onSubmit={submitComment}>
-              <textarea
-                className="task-detail__composer-input"
-                placeholder="Viết bình luận... (Enter để gửi, Shift+Enter xuống dòng)"
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                onKeyDown={handleKeyDown}
-                rows={2}
-              />
-              <button
-                type="submit"
-                className="task-detail__composer-send"
-                disabled={!draft.trim()}
-              >
-                Gửi
-              </button>
-            </form>
+            {readOnly ? (
+              <p className="task-detail__ro-note">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                </svg>
+                Task đã hoàn thành — chế độ chỉ đọc, không thể chỉnh sửa hay bình luận.
+              </p>
+            ) : (
+              <form className="task-detail__composer" onSubmit={submitComment}>
+                <textarea
+                  className="task-detail__composer-input"
+                  placeholder="Viết bình luận... (Enter để gửi, Shift+Enter xuống dòng)"
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  onKeyDown={handleKeyDown}
+                  rows={2}
+                />
+                <button
+                  type="submit"
+                  className="task-detail__composer-send"
+                  disabled={!draft.trim()}
+                >
+                  Gửi
+                </button>
+              </form>
+            )}
           </div>
         </section>
 

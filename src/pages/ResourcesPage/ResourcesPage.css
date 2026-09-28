@@ -5,11 +5,17 @@
   padding: 22px 26px 40px;
 }
 
+.resources-page__util {
+  /* Container query: TeamUtilization xếp lại theo chiều THỰC TẾ của card */
+  container-type: inline-size;
+}
+
 .resources-page__grid {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
   gap: 20px;
-  align-items: start;
+  /* Card cùng hàng luôn bằng nhau về chiều cao */
+  align-items: stretch;
 }
 
 @media (max-width: 1100px) {
